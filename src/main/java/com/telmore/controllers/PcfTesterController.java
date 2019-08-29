@@ -1,19 +1,20 @@
-package com.telmore.pcftester;
+package com.telmore.controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.boot.json.JsonParser;
-import org.springframework.boot.json.JsonParserFactory;
+import com.telmore.dao.ItemDao;
+import com.telmore.domain.Item;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PcfTesterController {
+
+    @Autowired
+    public ItemDao itemDAO;
 
     @RequestMapping("/")
     public String index() {
@@ -58,6 +59,26 @@ public class PcfTesterController {
 
         return "Credhub successful - see application log";
     }
+
+    @RequestMapping("/redis")
+    public String redis() {
+
+        System.out.println("------- Start: example of using Redis as data store -------");
+        Item item1 = new Item(1, "ItemOne", 30);
+        itemDAO.addItem(item1);
+        Item item2 = new Item(2, "ItemTwo", 35);
+        itemDAO.addItem(item2);
+        System.out.println("Number of Items: " + itemDAO.getNumberOfItems());
+        System.out.println(itemDAO.getItemAtIndex(1));
+        itemDAO.removeItem(item2);
+        System.out.println("This should be null: " + itemDAO.getItemAtIndex(1)); //It will return null, because value is deleted.
+        System.out.println("This should be ItemOne:  " + itemDAO.getItemAtIndex(0).getName());
+        itemDAO.removeItem(item1);
+        System.out.println("------- End: example of using Redis as data store -------");
+
+        return "Redis successful - see application log";
+    }
+
 
 
     // What other things need to be tested?
