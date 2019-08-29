@@ -59,4 +59,11 @@ public class PcfTesterController {
         return "Credhub successful - see application log";
     }
 
+
+    // What other things need to be tested?
+    // 1) MySql
+    // 2) Rabbit
+    // 3) Redis
+    // 4) any way to hit SSO?
+
 }
