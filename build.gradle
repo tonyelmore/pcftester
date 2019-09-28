@@ -27,6 +27,6 @@ dependencies {
 }
 
 jar {
-	archivesBaseName = 'pcf-tester'
+	archivesBaseName = 'pcftester'
 	archiveVersion = ''
 }

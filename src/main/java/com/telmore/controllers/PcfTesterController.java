@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.telmore.dao.ItemDao;
 import com.telmore.domain.Item;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,6 +26,12 @@ public class PcfTesterController {
     public String syslog() {
         System.out.println("PcfTester: Output to stdout");
         return "Syslog successful!";
+    }
+
+    @RequestMapping("/latency")
+    public String latencyTest(@RequestParam(name = "size") Integer size, @RequestParam Integer latency) {
+        System.out.println("Testing latency with size: " + size + " and latency: " + latency);
+        return "Latency Test Complete";
     }
 
     @RequestMapping("/credhub")
