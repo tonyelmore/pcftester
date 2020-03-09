@@ -1,21 +1,64 @@
 package com.telmore.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.telmore.dao.ItemDao;
 import com.telmore.domain.Item;
+import com.telmore.config.ElasticVars;
+
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 public class PcfTesterController {
 
     @Autowired
     public ItemDao itemDAO;
+
+    @Autowired
+    private final ElasticVars elasticVars = null;
+
+    @Autowired
+    private final RestHighLevelClient elasticClient = null;
+    
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    private final String port;
+    private final String memoryLimit;
+    private final String cfInstanceIndex;
+    private final String cfInstanceAddress;
+
+    public PcfTesterController(
+        // ElasticVars elasticVars,
+        // Injects the PORT environment variable, defaults to NOT SET
+        @Value("${port:NOT SET}") String port,
+        // Injects the MEMORY_LIMIT environment variable, defaults to NOT SET
+        @Value("${memory.limit:NOT SET}") String memoryLimit,
+        // Injects the CF_INSTANCE_INDEX environment variable, defaults to NOT SET
+        @Value("${cf.instance.index:NOT SET}") String cfInstanceIndex,
+        // Injects the CF_INSTANCE_ADDR environment variable, defaults to NOT SET
+        @Value("${cf.instance.addr:NOT SET}") String cfInstanceAddress
+    ) {
+        // this.elasticVars = elasticVars;
+        this.port = port;
+        this.memoryLimit = memoryLimit;
+        this.cfInstanceIndex = cfInstanceIndex;
+        this.cfInstanceAddress = cfInstanceAddress;
+    }
 
     @RequestMapping("/")
     public String index() {
@@ -29,9 +72,21 @@ public class PcfTesterController {
     }
 
     @RequestMapping("/latency")
+    // latency is in milliseconds 1000 = 1 second
     public String latencyTest(@RequestParam(name = "size") Integer size, @RequestParam Integer latency) {
         System.out.println("Testing latency with size: " + size + " and latency: " + latency);
-        return "Latency Test Complete";
+        try {
+            Thread.sleep(latency);
+        } catch (Exception ex) {
+            return "Latency Test Failed: " + ex.getMessage();
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int x = 0; x < size; x++) {
+            sb.append("x");
+        }
+
+        return sb.toString();
     }
 
     @RequestMapping("/credhub")
@@ -86,6 +141,45 @@ public class PcfTesterController {
         return "Redis successful - see application log";
     }
 
+    @RequestMapping("/elastic")
+    public String elastic() throws IOException {
+        Item item = new Item(5, "Tony", 30);
+
+        String json = objectMapper.writeValueAsString(item);        
+        String indexname = elasticVars.getIndex();
+
+        IndexRequest request = new IndexRequest(indexname);
+        request.source(json, XContentType.JSON);
+        
+        IndexResponse response = elasticClient.index(request, RequestOptions.DEFAULT);
+        System.out.println("response id:" + response.getId());
+        return response.getResult().toString();
+    }
+
+    @RequestMapping("/vars")
+    public String vars() {
+        String vcapServices = System.getenv("VCAP_SERVICES");
+        System.out.println(vcapServices);
+
+        // Print out all environment variables
+        Map<String, String> env = System.getenv();
+        env.forEach((k, v) -> System.out.println(k + ":" + v));
+
+        // Common, built-in environment variables
+        System.out.println("PORT: " + port);
+        System.out.println("MEMORY_LIMIT: " + memoryLimit);
+        System.out.println("CF_INSTANCE_INDEX: " + cfInstanceIndex);
+        System.out.println("CF_INSTANCE_ADDR: " + cfInstanceAddress);
+
+        System.out.println("_________ test ___________");
+        System.out.println(elasticVars);
+        System.out.println("-------- end test --------");
+    
+        StringBuilder sb = new StringBuilder();
+        sb.append("Lowest IP Address: " + elasticVars.getLowestNode() + "\n");
+        sb.append("Highest IP Address: " + elasticVars.getHighestNode());
+        return sb.toString();
+    }
 
 
     // What other things need to be tested?
