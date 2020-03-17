@@ -6,8 +6,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.CollectionUtils;
 
-import org.elasticsearch.action.admin.cluster.repositories.cleanup.CleanupRepositoryRequest;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,14 +19,10 @@ public class ElasticVars {
   private String index;
   private String password;
   private String username;
-  private int defaultPort = 9300;
+  private int defaultPort = 9200;
   List<String> nodes;
 
-  public String getLowestNode() {
-    System.out.println("tonytest: username is: " + username);
-    System.out.println("tonytest: password is: " + password);
-    System.out.println("tonytest: nodes is: " + nodes);
-
+  private String getLowestNode() {
     if (CollectionUtils.isEmpty(nodes)) {
       return "";
     }
@@ -36,7 +30,7 @@ public class ElasticVars {
     return nodes.get(0);
   }
 
-  public String getHighestNode() {
+  private String getHighestNode() {
     if (CollectionUtils.isEmpty(nodes)) {
       return "";
     }
@@ -44,6 +38,14 @@ public class ElasticVars {
     return nodes.get(0);
   }
 
+  public String getMasterNode() {
+    return getLowestNode();
+  }
+
+  public String getMasterNodeAndPort() {
+    return getMasterNode() + ":" + getPort();
+  }
+  
   public int getPort() {
     return defaultPort;
   }

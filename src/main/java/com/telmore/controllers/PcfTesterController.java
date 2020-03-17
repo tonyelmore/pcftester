@@ -1,32 +1,33 @@
 package com.telmore.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.telmore.dao.ItemDao;
-import com.telmore.domain.Item;
 import com.telmore.config.ElasticVars;
+import com.telmore.dao.ArticleRepository;
+import com.telmore.dao.ItemDao;
+import com.telmore.domain.Article;
+import com.telmore.domain.Author;
+import com.telmore.domain.Item;
 
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.io.IOException;
-import java.util.Map;
 
 @RestController
 public class PcfTesterController {
 
     @Autowired
     public ItemDao itemDAO;
+
+    @Autowired
+    public ArticleRepository articleService;
 
     @Autowired
     private final ElasticVars elasticVars = null;
@@ -143,17 +144,26 @@ public class PcfTesterController {
 
     @RequestMapping("/elastic")
     public String elastic() throws IOException {
-        Item item = new Item(5, "Tony", 30);
+//        String indexname = elasticVars.getIndex();
+// the index is on the annotation of the Article class
+// Which is really not convenient since any new instance of elasticsearch will have a different index
 
-        String json = objectMapper.writeValueAsString(item);        
-        String indexname = elasticVars.getIndex();
+        System.out.println("In the elastic method in the controller");
+        Article article = new Article();
+        article.setTitle("TestArticlename");
+        article.setAuthors(Arrays.asList(new Author(1, "John Smith", 30), new Author(2, "John Doe", 40)));
+        System.out.println("About to save article");
+        articleService.save(article);
 
-        IndexRequest request = new IndexRequest(indexname);
-        request.source(json, XContentType.JSON);
-        
-        IndexResponse response = elasticClient.index(request, RequestOptions.DEFAULT);
-        System.out.println("response id:" + response.getId());
-        return response.getResult().toString();
+        // Saw some code like this... should it be used instead?
+        // IndexRequest request = new IndexRequest("spring-data", "elasticsearch", randomID())
+        //     .source(singletonMap("feature", "high-level-rest-client"))
+        //     .setRefreshPolicy(IMMEDIATE);
+
+        // IndexResponse response = highLevelClient.index(request);
+
+        // Should really do a "get" and return the retrieved article
+        return "Article saved in elasticsearch: " + article.getId();
     }
 
     @RequestMapping("/vars")
@@ -175,10 +185,7 @@ public class PcfTesterController {
         System.out.println(elasticVars);
         System.out.println("-------- end test --------");
     
-        StringBuilder sb = new StringBuilder();
-        sb.append("Lowest IP Address: " + elasticVars.getLowestNode() + "\n");
-        sb.append("Highest IP Address: " + elasticVars.getHighestNode());
-        return sb.toString();
+        return "ElasticSearch Master IP Address: " + elasticVars.getMasterNode();
     }
 
 
