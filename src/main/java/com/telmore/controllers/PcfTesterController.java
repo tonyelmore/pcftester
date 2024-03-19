@@ -13,7 +13,6 @@ import com.telmore.domain.Article;
 import com.telmore.domain.Author;
 import com.telmore.domain.Item;
 
-import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +31,6 @@ public class PcfTesterController {
     @Autowired
     private final ElasticVars elasticVars = null;
 
-    @Autowired
-    private final RestHighLevelClient elasticClient = null;
-    
     @Autowired
     private ObjectMapper objectMapper;
 

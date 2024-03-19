@@ -9,7 +9,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import lombok.Data;
 
-@Document(indexName = "pntliapffkjy", type = "article")
+@Document(indexName = "pntliapffkjy")
 @Data
 public class Article {
  

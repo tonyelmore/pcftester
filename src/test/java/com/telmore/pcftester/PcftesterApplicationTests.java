@@ -11,6 +11,7 @@ public class PcftesterApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		System.out.println("PcftesterApplicationTests: contextLoads");
 	}
 
 }

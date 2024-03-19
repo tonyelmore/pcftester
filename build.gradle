@@ -1,12 +1,12 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.5.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'org.springframework.boot' version '3.2.2'
+	id 'io.spring.dependency-management' version '1.1.4'
 	id 'java'
 }
 
 group = 'com.telmore'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = JavaVersion.VERSION_17
 
 repositories {
 	mavenCentral()
@@ -15,17 +15,18 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	compile("org.springframework.boot:spring-boot-starter-web")
-	compile("org.springframework.boot:spring-boot-starter-data-redis")
-	compile("org.springframework.boot:spring-boot-starter-data-elasticsearch")
-	compile("org.apache.commons:commons-pool2")
-	compile("redis.clients:jedis")
-	compile("javax.json:javax.json-api")
+	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-data-redis")
+	implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch")
+	// implementation("org.elasticsearch.client:elasticsearch-rest-high-level-client:7.17.6")
+	implementation("org.apache.commons:commons-pool2")
+	implementation("redis.clients:jedis")
+	// implementation("javax.json:javax.json-api")
 	compileOnly("org.projectlombok:lombok")
-	testCompileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testAnnotationProcessor("org.projectlombok:lombok")
-	testCompile("junit:junit")
+	testImplementation 'junit:junit:4.12'
+    implementation 'junit:junit:4.12'
 }
 
 jar {
