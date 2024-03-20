@@ -12,4 +12,6 @@ applications:
     LATENCY_ENABLED: 'true'
     REDIS_ENABLED: 'false'
     CREDHUB_ENABLED: 'false'
-    ELASTIC_ENABLED: 'true'
+    ELASTIC_ENABLED: 'false'
+    CONFIG_SERVER_ENABLED: 'true'
+    
