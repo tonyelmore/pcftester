@@ -1,10 +1,11 @@
-package com.telmore.dao;
+package com.telmore.pcftester.components.redis.dao;
 
-import com.telmore.domain.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.telmore.pcftester.components.redis.domain.Item;
 
 @Repository
 @Transactional

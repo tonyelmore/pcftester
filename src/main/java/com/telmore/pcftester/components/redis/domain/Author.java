@@ -1,10 +1,10 @@
-package com.telmore.domain;
+package com.telmore.pcftester.components.redis.domain;
 
 import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class Item implements Serializable {
+public class Author implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private final int id;

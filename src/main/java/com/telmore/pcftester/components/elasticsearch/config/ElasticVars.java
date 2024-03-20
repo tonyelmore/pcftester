@@ -1,4 +1,4 @@
-package com.telmore.config;
+package com.telmore.pcftester.components.elasticsearch.config;
 
 import java.util.List;
 

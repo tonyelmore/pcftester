@@ -1,4 +1,4 @@
-package com.telmore.pcftester;
+package com.telmore.pcftester.components.redis.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -7,7 +7,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import com.telmore.domain.Item;
+
+import com.telmore.pcftester.components.redis.domain.Item;
 
 @Configuration
 @ComponentScan("com.telmore")

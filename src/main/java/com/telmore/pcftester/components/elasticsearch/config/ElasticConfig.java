@@ -1,6 +1,4 @@
-package com.telmore.pcftester;
-
-import com.telmore.config.ElasticVars;
+package com.telmore.pcftester.components.elasticsearch.config;
 
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;

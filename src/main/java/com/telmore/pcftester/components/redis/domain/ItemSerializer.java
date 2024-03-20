@@ -1,4 +1,4 @@
-package com.telmore.domain;
+package com.telmore.pcftester.components.redis.domain;
 
 import java.io.IOException;
 
