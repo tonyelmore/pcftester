@@ -30,6 +30,7 @@ import com.telmore.pcftester.components.latency.controllers.LatencyConditional;
         sb.append("-------- Current Components ---------").append("\n");
         sb.append("These can be enabled / disabled in the manifest when pushing the app").append("\n");
         sb.append("/latency - Run tests with some added latency").append("\n");
+        sb.append("/configserver - Test the config server").append("\n");
         sb.append("/credhub").append("\n");
         sb.append("/redis").append("\n");
         sb.append("/elastic").append("\n");
