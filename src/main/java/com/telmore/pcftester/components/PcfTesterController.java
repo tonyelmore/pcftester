@@ -34,6 +34,7 @@ import com.telmore.pcftester.components.latency.controllers.LatencyConditional;
         sb.append("/credhub").append("\n");
         sb.append("/redis").append("\n");
         sb.append("/elastic").append("\n");
+        sb.append("/headers - Run test to print out request headers").append("\n");
         sb.append("-------- Future Options ---------").append("\n");
         sb.append("MySql").append("\n");
         sb.append("RabbitMQ").append("\n");

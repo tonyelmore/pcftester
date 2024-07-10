@@ -14,4 +14,5 @@ applications:
     CREDHUB_ENABLED: 'false'
     ELASTIC_ENABLED: 'false'
     CONFIG_SERVER_ENABLED: 'true'
+    HEADERS_ENABLED: 'true'
     
