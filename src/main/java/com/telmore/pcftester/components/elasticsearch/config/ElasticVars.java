@@ -30,13 +30,13 @@ public class ElasticVars {
     return nodes.get(0);
   }
 
-  private String getHighestNode() {
-    if (CollectionUtils.isEmpty(nodes)) {
-      return "";
-    }
-    nodes.sort((String s1, String s2) -> s2.compareTo(s1));
-    return nodes.get(0);
-  }
+  // private String getHighestNode() {
+  //   if (CollectionUtils.isEmpty(nodes)) {
+  //     return "";
+  //   }
+  //   nodes.sort((String s1, String s2) -> s2.compareTo(s1));
+  //   return nodes.get(0);
+  // }
 
   public String getMasterNode() {
     return getLowestNode();

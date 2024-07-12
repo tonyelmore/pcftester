@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.telmore.pcftester.components.elasticsearch.config.ElasticVars;
+// import com.telmore.pcftester.components.elasticsearch.config.ElasticVars;
 import com.telmore.pcftester.components.elasticsearch.dao.ArticleRepository;
 import com.telmore.pcftester.components.elasticsearch.domain.Article;
 import com.telmore.pcftester.components.elasticsearch.domain.Author;
@@ -22,8 +22,8 @@ public class ElasticController {
     @Autowired
     public ArticleRepository articleService;
 
-    @Autowired
-    private final ElasticVars elasticVars = null;
+    // @Autowired
+    // private final ElasticVars elasticVars = null;
 
     @GetMapping("test")
     public String test() {

@@ -3,18 +3,15 @@ package com.telmore.pcftester.components.variables.controllers;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
-import java.util.stream.StreamSupport;
 
 import org.springframework.context.annotation.Conditional;
-import org.springframework.core.env.AbstractEnvironment;
-import org.springframework.core.env.EnumerablePropertySource;
-import org.springframework.core.env.MutablePropertySources;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
+
 
 @RestController
 @RequestMapping("/variables/")
