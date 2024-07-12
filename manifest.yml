@@ -8,12 +8,12 @@ applications:
     - java_buildpack_offline
   env:
     JBP_CONFIG_SPRING_AUTO_RECONFIGURATION: '{enabled: false}'
-    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 17.+ } }'
+    JBP_CONFIG_OPEN_JDK_JRE: '{ jre: { version: 11.+ } }'
     LATENCY_ENABLED: 'true'
     REDIS_ENABLED: 'false'
     CREDHUB_ENABLED: 'false'
     ELASTIC_ENABLED: 'false'
-    CONFIG_SERVER_ENABLED: 'true'
+    CONFIG_SERVER_ENABLED: 'false'
     HEADERS_ENABLED: 'true'
     VARIABLES_ENABLED: 'true'
     
